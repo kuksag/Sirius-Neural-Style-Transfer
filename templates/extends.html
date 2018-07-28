@@ -1,0 +1,98 @@
+{% extends "basic.html" %}
+
+{% block hrefs %}
+    <li class="active"><a href="#intro">Интро</a></li>
+    <li><a href="#work">Сервис</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#service">Как это работает</a></li>
+{% endblock  %}
+
+{% block block1 %}
+    <h5>Шаг 1</h5>
+    <p>Загрузите фотографию, на которую хотите перенести стиль</p>
+{% endblock %}
+
+{% block formblock1 %}
+    <label class="btn btn-default btn-file">
+        Выбрать фотографию <br> (jpg) <input type="file" name = "input" required accept="image/jpeg" style="display: none;">
+    </label>
+    <label>
+        <button type="submit" class="btn btn-success">Загрузить композицию</button>
+    </label>
+{% endblock %}
+
+{% block showblock1 %}
+    <div class="boxed-grey inner avatar">
+        <img class="img-responsive img-square" src=" {{ url_for('static', filename = 'images/' + num + '/input.jpg') }} ">
+    </div>
+{% endblock %}
+
+{% block block2 %}
+    <h5>Шаг 2</h5>
+    <p>Загрузите фотографию, с которой хотите перенести стиль</p>
+{% endblock %}
+
+{% block formblock2 %}
+    <label>
+        <button type="submit" class="btn btn-success">Загрузить стиль <br> и запустить обработку</button>
+    </label>
+    <div class="picker">
+      <select name = "slt" class='image-picker grid'>
+          <option data-img-src='./static/styles/wave.jpg' data-img-class="gr-item-1" data-img-alt="Page 4"  value='wave'>  wave  </option>
+          <option data-img-src='./static/styles/mosaic.jpg' data-img-class="gr-item-2" value='mosaic'>  mosaic  </option>
+          <option data-img-src='./static/styles/rain_princess.jpg' data-img-class="gr-item-3" data-img-alt="Page 3"  value='rain_princess'>  rain princess  </option>
+          <option data-img-src='./static/styles/candy.jpg' data-img-class="gr-item-4" data-img-alt="Page 1" value='candy'>  candy  </option>
+          <option data-img-src='./static/styles/night.jpg' data-img-class="gr-item-5" data-img-alt="Page 4"  value='night'>  night  </option>
+          <option data-img-src='./static/styles/landscape.jpg' data-img-class="gr-item-6" data-img-alt="Page 4"  value='landscape'>  landscape  </option>
+          <option data-img-src='./static/styles/udnie.jpg' data-img-class="gr-item-7" data-img-alt="Page 4"  value='udnie'>  udnie  </option>
+          <option data-img-src='./static/styles/swirls.jpg' data-img-class="gr-item-8" data-img-alt="Page 4"  value='swirls'>  swirls  </option>
+          <option data-img-src='./static/styles/strokes.jpg' data-img-class="gr-item-9" data-img-alt="Page 4"  value='strokes'>  strokes  </option>
+          <option data-img-src='./static/styles/bamboo.jpg' data-img-class="gr-item-10" data-img-alt="Page 4"  value='bamboo'>  bamboo  </option>
+          <option data-img-src='./static/styles/leaves.jpg' data-img-class="gr-item-11" data-img-alt="Page 4"  value='leaves'>  leaves  </option>
+      </select>
+    </div>
+{% endblock %}
+
+{% block showblock2 %}
+    <div class="boxed-grey inner avatar">
+        <img class="img-responsive img-square" src=" {{ url_for('static', filename = 'styles/' + style_num + '.jpg') }} ">
+    </div>
+{% endblock %}
+
+
+{% block block4 %}
+    <h5>Итог</h5>
+    <a class="btn btn-default btn-file" href="{{ url_for('.end', _anchor = 'result') }}">Запустить обработку <br> через нейронную сеть</a>
+{% endblock %}
+
+{% block block5 %}
+    <section id = "result" class = "home-section text-center bg-gray" style="background-color: #fdff99;">
+      <div class="heading-about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="wow bounceInDown" data-wow-delay="0.4s">
+              <div class="section-heading">
+                <h2>Обработка фотографий завершена</h2>
+                <i class="fa fa-2x fa-angle-down"></i>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <img style="display: block; margin-left: auto; margin-right: auto;"  src  = {{ path }} alt=""  />
+        <a class="btn btn-default btn-file" href= {{ path }} >Скачать</a>
+  </section>
+{% endblock %}
+
+{% block blocktext %}
+    <p>
+    Сначала пользователь загружает изображение и выбирает один из N стилей. Далее предобученная сверточная* нейросеть извлекает информацию из этого изображения и выбранного стиля и передает ее другой сверточной сети TransformerNet**. <br>
+        После этого TransformerNet на основе полученной информации генерирует картинку, имеющую контент введенного изображения и выбранный стиль. <br> <br>
+
+*сверточная нейросеть – особый тип многослойной нейронной сети, использующий операции свертки для получения информации. Такие сети быстрее обычных и используются преимущественно при операциях над изображениями. <br>
+** TransformerNet – нейросеть для переноса стиля, в отличии от медленного способа оптимизирует параметры сети в место извлечения информации из пикселей картинки, является полностью сверточной.
+    </p>
+{% endblock %}
